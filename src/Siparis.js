@@ -1,27 +1,25 @@
 import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
-
-function Musteri() {
-  const[allCustomers, setAllCustomers] = useState([]);
+function Siparis() {
+  const[allOrders, setAllOrders] = useState([]);
   useEffect(() => {
 
-    const getAllCustomersInfo = async () => {
+    const getAllOrdersInfo = async () => {
         let response = await axios.get(
-            'https://private-7d7a277-gokceuruk.apiary-mock.com/musteri'
+            'https://private-7d7a277-gokceuruk.apiary-mock.com/siparis'
             );
     
-            console.log("getCustomersInfo" + response.data.MusteriListesi);
+            console.log("getOrdersInfo" + response.data.SiparisListesi);
 
-            setAllCustomers(response.data.MusteriListesi);
+            setAllOrders(response.data.SiparisListesi);
 
     }
     // call the function
-    getAllCustomersInfo().catch(console.error);
+    getAllOrdersInfo().catch(console.error);
  
   }, [])
   return (
@@ -294,7 +292,7 @@ function Musteri() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <Link to="/Musteri">Liste</Link>
+            <a href="musteri_liste.html">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
@@ -325,26 +323,26 @@ function Musteri() {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Adı</th>
-                        <th>Soyadı</th>
-                        <th>Cinsiyet</th>
-                        <th>Doğum Tarihi</th>
-                        <th>Adres</th>
-                        <th>Şehir</th>
+                        <th>Siparis Veren</th>
+                        <th>Siparis Tarihi</th>
+                        <th>Toplam Tutar</th>
+                        <th>Para Birimi</th>
+                        <th>Siparis SiparisDetayi</th>
+                        <th>Siparis Durumu</th>
                       </tr>
                     </thead>
                     <tbody>
                     {
-                    allCustomers.map( (data) => ( 
+                    allOrders.map( (data) => ( 
                     <> 
                       <tr>
                         <td></td>
-                        <td>{data.MusteriAdi}</td>
-                        <td>{data.MusteriSoyadi}</td>
-                        <td>{data.Cinsiyet}</td>
-                        <td>{data.DogumTarihi}</td>
-                        <td>{data.Adres}</td>
-                        <td>{data.Sehir}</td>
+                        <td>{data.SiparisVeren}</td>
+                        <td>{data.SiparisTarihi}</td>
+                        <td>{data.ToplamTutar}</td>
+                        <td>{data.ParaBirimi}</td>
+                        <td>{data.SiparisDetayi}</td>
+                        <td>{data.SiparisDurumu}</td>
                       </tr>
                     </>
                     )
@@ -373,4 +371,4 @@ function Musteri() {
   );
 }
 
-export default Musteri;
+export default Siparis;

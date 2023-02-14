@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
@@ -8,10 +9,26 @@ import Footer from "./Components/Footer";
 
 
 function Urun() {
+  const[allProducts, setAllProducts] = useState([]);
+  useEffect(() => {
+
+    const getAllProductsInfo = async () => {
+        let response = await axios.get(
+            'https://private-7d7a277-gokceuruk.apiary-mock.com/urun'
+            );
+    
+            console.log("getProductsInfo" + response.data.UrunListesi);
+
+            setAllProducts(response.data.UrunListesi);
+
+    }
+    // call the function
+    getAllProductsInfo().catch(console.error);
+ 
+  }, [])
   return (
   
    <>
-
   <Header />
 
   {/* BEGIN PAGE CONTAINER */}
@@ -22,7 +39,7 @@ function Urun() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            Müşteri <small>Liste</small>
+            U <small>Liste</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -309,42 +326,34 @@ function Urun() {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Adı</th>
-                        <th>Soyadı</th>
-                        <th>Cinsiyet</th>
-                        <th>Doğum Tarihi</th>
-                        <th>Adres</th>
-                        <th>Şehir</th>
+                        <th>Urun Adi</th>
+                        <th>Kodu</th>
+                        <th>Fiyati</th>
+                        <th>Para Birimi</th>
+                        <th>Stok Adedi</th>
+                        <th>Aciklama</th>
                       </tr>
                     </thead>
                     <tbody>
+                     
+                        {
+                    allProducts.map( (data) => ( 
+                    <> 
                       <tr>
-                        <td>1</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
+                        <td></td>
+                        <td>{data.UrunAdi}</td>
+                        <td>{data.Kodu}</td>
+                        <td>{data.Fiyati}</td>
+                        <td>{data.ParaBirimi}</td>
+                        <td>{data.StokAdedi}</td>
+                        <td>{data.Aciklama}</td>
                       </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                      </tr>
+                    </>
+                    )
+                    )
+                    } 
+                    
+                    
                     </tbody>
                   </table>
                 </div>

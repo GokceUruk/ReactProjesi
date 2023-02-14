@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 function Header() {
     return (
   <>
@@ -555,7 +556,7 @@ function Header() {
                   </a>
                   <ul className="dropdown-menu">
                     <li className=" ">
-                      <a href="musteri_liste.html">Müşteri Listesi </a>
+                    <Link to="/Musteri">Müşteri Listesi</Link>
                     </li>
                     <li className=" ">
                       <a href="musteri_yeni.html">Yeni Kayıt </a>
@@ -569,7 +570,7 @@ function Header() {
                   </a>
                   <ul className="dropdown-menu">
                     <li className=" ">
-                      <a href="urun_liste.html">Ürün Listesi </a>
+                    <Link to="/Urun">Urun Listesi</Link>
                     </li>
                     <li className=" ">
                       <a href="urun_yeni.html">Yeni Ürün Kaydı </a>
@@ -595,7 +596,7 @@ function Header() {
                   </a>
                   <ul className="dropdown-menu">
                     <li className=" ">
-                      <a href="siparis_liste.html">Sipariş Listesi </a>
+                    <Link to="/Siparis">Siparis Listesi</Link>
                     </li>
                     <li className=" ">
                       <a href="siparis_yeni.html">Yeni Sipariş </a>
@@ -609,7 +610,7 @@ function Header() {
                   </a>
                   <ul className="dropdown-menu">
                     <li className=" ">
-                      <a href="tahsilat_liste.html">Tahsilat Listesi </a>
+                    <Link to="/Tahsilat">Tahsilat Listesi</Link>
                     </li>
                     <li className=" ">
                       <a href="tahsilat_yeni.html">Yeni Tahsilat </a>
@@ -623,7 +624,7 @@ function Header() {
                   </a>
                   <ul className="dropdown-menu">
                     <li className=" ">
-                      <a href="odeme_liste.html">Ödeme Listesi </a>
+                    <Link to="/Odeme">Müşteri Listesi</Link>
                     </li>
                     <li className=" ">
                       <a href="odeme_yeni.html">Yeni Ödeme </a>

@@ -1,33 +1,34 @@
+import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-function Musteri() {
-  const[allCustomers, setAllCustomers] = useState([]);
+
+
+function Odeme() {
+  const[allProducts, setAllProducts] = useState([]);
   useEffect(() => {
 
-    const getAllCustomersInfo = async () => {
+    const getAllProductsInfo = async () => {
         let response = await axios.get(
-            'https://private-7d7a277-gokceuruk.apiary-mock.com/musteri'
+            'https://private-7d7a277-gokceuruk.apiary-mock.com/odeme'
             );
     
-            console.log("getCustomersInfo" + response.data.MusteriListesi);
+            console.log("getProductsInfo" + response.data.OdemeListesi);
 
-            setAllCustomers(response.data.MusteriListesi);
+            setAllProducts(response.data.OdemeListesi);
 
     }
     // call the function
-    getAllCustomersInfo().catch(console.error);
+    getAllProductsInfo().catch(console.error);
  
   }, [])
   return (
   
    <>
-
   <Header />
 
   {/* BEGIN PAGE CONTAINER */}
@@ -38,7 +39,7 @@ function Musteri() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            Müşteri <small>Liste</small>
+            U <small>Liste</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -294,7 +295,7 @@ function Musteri() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <Link to="/Musteri">Liste</Link>
+            <a href="musteri_liste.html">Liste</a>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
@@ -325,32 +326,30 @@ function Musteri() {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Adı</th>
-                        <th>Soyadı</th>
-                        <th>Cinsiyet</th>
-                        <th>Doğum Tarihi</th>
-                        <th>Adres</th>
-                        <th>Şehir</th>
+                        <th>Musteri</th>
+                        <th>Tutar</th>
+                        <th>Para Birimi</th>
+                        <th>İlgiliSiparis</th>
+                        <th>TahsilatTarihi</th>
                       </tr>
                     </thead>
                     <tbody>
-                    {
-                    allCustomers.map( (data) => ( 
+                     
+                        {
+                    allProducts.map( (data) => ( 
                     <> 
-                      <tr>
-                        <td></td>
-                        <td>{data.MusteriAdi}</td>
-                        <td>{data.MusteriSoyadi}</td>
-                        <td>{data.Cinsiyet}</td>
-                        <td>{data.DogumTarihi}</td>
-                        <td>{data.Adres}</td>
-                        <td>{data.Sehir}</td>
-                      </tr>
+                      <tr><td></td>
+                      <td>{data.Musteri}</td>
+                      <td>{data.Tutar}</td>
+                      <td>{data.ParaBirimi}</td>
+                      <td>{data.İlgiliSiparis}</td>
+                      <td>{data.TahsilatTarihi}</td></tr>
                     </>
                     )
                     )
                     } 
- 
+                    
+                    
                     </tbody>
                   </table>
                 </div>
@@ -373,4 +372,4 @@ function Musteri() {
   );
 }
 
-export default Musteri;
+export default Odeme;
