@@ -11,6 +11,7 @@ import Urun from "./Urun"
 import Siparis from "./Siparis";
 import Odeme from "./Odeme";
 import Tahsilat from "./Tahsilat";
+import Login from "./Login";
 
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Siparis" element={<Siparis/>}/>
           <Route path="/Odeme" element={<Odeme/>}/>
           <Route path="/Tahsilat" element={<Tahsilat/>}/>
+          <Route path="/Login" element={<Login/>}/>
         </Routes>
     </BrowserRouter>
   )
