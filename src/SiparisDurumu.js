@@ -1,45 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
 
 
 
 
-function Odeme() {
+
+function SiparisDurumu() {
   const navigate = useNavigate();
-  const[allProducts, setAllProducts] = useState([]);
+
+  const[allOrderStatus, setAllOrderStatus] = useState([]); // useState ilk değeri yok demektir 
+  
   useEffect(() => {
-    if(!localStorage.getItem("userName"))
+
+    if (!localStorage.getItem("userName"))
     {
-      navigate('/login',{replace:true});
-
-    }
+        navigate('/login', { replace: true });
+    }  
+ 
   }, [])
- 
- 
-  useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
 
-    const getAllProductsInfo = async () => {
+  useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
+  
+    const getAllOrderStatusInfo = async () => {
         let response = await axios.get(
-            'https://private-7d7a277-gokceuruk.apiary-mock.com/odeme'
+            'https://private-7d7a277-gokceuruk.apiary-mock.com/siparisdurumu'
             );
     
-            console.log("getProductsInfo" + response.data.OdemeListesi);
+            console.log("getAllOrderStatusInfo" + response.data.SiparisDurumuListesi);
 
-            setAllProducts(response.data.OdemeListesi);
+            setAllOrderStatus(response.data.SiparisDurumuListesi);
 
     }
     // call the function
-    getAllProductsInfo().catch(console.error);
+    getAllOrderStatusInfo().catch(console.error);
  
   }, [])
   return (
   
    <>
+
   <Header />
 
   {/* BEGIN PAGE CONTAINER */}
@@ -50,7 +53,7 @@ function Odeme() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            U <small>Liste</small>
+            Ödeme <small>Liste</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -298,11 +301,11 @@ function Odeme() {
         {/* BEGIN PAGE BREADCRUMB */}
         <ul className="page-breadcrumb breadcrumb">
           <li>
-            <a href="#">Tanımlar</a>
+            <a href="#">Ekran Seçenekleri</a>
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="#">Müşteri</a>
+            <a href="#">Sipariş Durumu</a>
             <i className="fa fa-circle" />
           </li>
           <li>
@@ -324,7 +327,7 @@ function Odeme() {
                 <div className="caption">
                   <i className="fa fa-cogs font-green-sharp" />
                   <span className="caption-subject font-green-sharp bold uppercase">
-                    MÜŞTERİ LİSTESİ
+                    SİPARİŞ DURUMU LİSTESİ
                   </span>
                 </div>
                 <div className="tools">
@@ -337,31 +340,24 @@ function Odeme() {
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Musteri</th>
-                        <th>Tutar</th>
-                        <th>Para Birimi</th>
-                        <th>İlgiliSiparis</th>
-                        <th>TahsilatTarihi</th>
+                        <th>Sipariş Durumu</th>
+                         
                       </tr>
                     </thead>
                     <tbody>
-                     
-                        {
-                    allProducts.map( (data) => ( 
+                    {
+                    allOrderStatus.map( (data) => ( 
                     <> 
-                      <tr><td></td>
-                      <td>{data.Musteri}</td>
-                      <td>{data.Tutar}</td>
-                      <td>{data.ParaBirimi}</td>
-                      <td>{data.İlgiliSiparis}</td>
-                      <td>{data.TahsilatTarihi}</td></tr>
+                      <tr>
+                        <td></td>
+                        <td>{data.SiparisDurumu}</td>
+                                              
+                      </tr>
                     </>
-                    )
-                    )
-                    } 
-                    
-                    
-                    </tbody>
+                  )
+                )
+              } 
+                   </tbody>
                   </table>
                 </div>
               </div>
@@ -383,4 +379,4 @@ function Odeme() {
   );
 }
 
-export default Odeme;
+export default SiparisDurumu;

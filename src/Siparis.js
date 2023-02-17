@@ -3,10 +3,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import { useNavigate } from 'react-router-dom';
 
 function Siparis() {
+  const navigate = useNavigate();
   const[allOrders, setAllOrders] = useState([]);
   useEffect(() => {
+    if(!localStorage.getItem("userName"))
+    {
+      navigate('/login',{replace:true});
+
+    }
+  }, [])
+  useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
 
     const getAllOrdersInfo = async () => {
         let response = await axios.get(

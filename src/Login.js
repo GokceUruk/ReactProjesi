@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
  
@@ -8,6 +9,7 @@ function Login() {
   const[name, setName] = useState(); 
   const[password, setPassword] = useState(); 
   const[result, setResult] = useState(); 
+  const navigate = useNavigate();
 
   const myButtonClick = async () => {
 
@@ -28,14 +30,20 @@ function Login() {
     /*console.log("Request:" + JSON.stringify(requestBody));
     console.log("Response:" + JSON.stringify(response));*/
 
-    if (response.data.result=="successxxx") {
-          setResult("Giriş Başarılı");
+
+    if (response.data.result=="success") {
+      setResult("Giriş Başarılı");
+
+      localStorage.setItem("userName", name)
+      navigate('/musteri', { replace: true });
+      //alert("basarılı");
 
     } else {
-          setResult("Hatalı kullanıcı adı veya şifre");
+      setResult("Hatalı kullanıcı adı veya şifre");
+     // alert("basarısız");
     }
-    
-    console.log("Resp:" + result);
+
+console.log(result);
 
     // if (response.data.result=="success") {
     //   localStorage.setItem("userName", "onurkulabas")

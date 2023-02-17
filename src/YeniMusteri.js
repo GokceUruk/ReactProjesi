@@ -1,45 +1,76 @@
-import logo from './logo.svg';
 import './App.css';
+import {json, Link, useNavigate} from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { useNavigate } from 'react-router-dom';
 
 
 
 
-function Odeme() {
+function YeniMusteri() {
+  
   const navigate = useNavigate();
-  const[allProducts, setAllProducts] = useState([]);
+  const[name, setName] = useState(); 
+  const[surname, setSurname] = useState(); 
+  const[birthday, setBirthday] = useState(); 
+  const[gender, setGender] = useState(); 
+  const[address, setAddress] = useState(); 
+  const[city, setCity] = useState(); 
+
+  const [cities, setCities] = useState([]); 
+
+
+  const myButtonClick = async () => {
+    let requestBody = {
+    MusteriAdi:name,
+    MusteriSoyadi:surname,
+    Cinsiyet:birthday,
+    DogumTarihi:gender,
+    adAdresdress:address,
+    Sehir:city
+    }
+
+    const response = await axios.post(
+      'https://private-7d7a277-gokceuruk.apiary-mock.com/musteri',
+      requestBody
+    );
+
+      let data = response.data.message ;
+      alert( data );
+
+      navigate('/musteri', { replace: true })
+
+  }
+ 
   useEffect(() => {
-    if(!localStorage.getItem("userName"))
+
+    if (!localStorage.getItem("userName"))
     {
-      navigate('/login',{replace:true});
+        navigate('/login', { replace: true });
+    }  
 
-    }
+    const getCities = async () => {
+      let response = await axios.get(
+          'https://private-7d7a277-gokceuruk.apiary-mock.com/sehir'
+          );
+  
+          //console.log("getCities" + response.data.SehirListesi);
+
+          setCities(response.data.SehirListesi);
+
+  }
+  // call the function
+  getCities().catch(console.error);
+ 
   }, [])
  
- 
-  useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
-
-    const getAllProductsInfo = async () => {
-        let response = await axios.get(
-            'https://private-7d7a277-gokceuruk.apiary-mock.com/odeme'
-            );
+  
     
-            console.log("getProductsInfo" + response.data.OdemeListesi);
-
-            setAllProducts(response.data.OdemeListesi);
-
-    }
-    // call the function
-    getAllProductsInfo().catch(console.error);
- 
-  }, [])
   return (
   
    <>
+
   <Header />
 
   {/* BEGIN PAGE CONTAINER */}
@@ -50,7 +81,7 @@ function Odeme() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            U <small>Liste</small>
+            Müşteri <small>Yeni Kayıt</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -306,70 +337,122 @@ function Odeme() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="musteri_liste.html">Liste</a>
+            < Link to ="/YeniMusteri"> Yeni Kayıt </ Link>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
-        {/* BEGIN PAGE CONTENT INNER */}
         <div className="row">
-          <div className="col-md-12">
-            {/* <div class="note note-success note-bordered">
-						<p>
-							 Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div> */}
-            {/* BEGIN SAMPLE TABLE PORTLET*/}
-            <div className="portlet light">
-              <div className="portlet-title">
-                <div className="caption">
-                  <i className="fa fa-cogs font-green-sharp" />
-                  <span className="caption-subject font-green-sharp bold uppercase">
-                    MÜŞTERİ LİSTESİ
-                  </span>
-                </div>
-                <div className="tools">
-                  <a href="javascript:;" className="collapse"></a>
-                </div>
+        <div className="col-md-12">
+          {/* BEGIN SAMPLE FORM PORTLET*/}
+          <div className="portlet light">
+            <div className="portlet-title">
+              <div className="caption font-green-haze">
+                {/* <i class="icon-settings font-green-haze"></i>
+								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
               </div>
-              <div className="portlet-body">
-                <div className="table-responsive">
-                  <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Musteri</th>
-                        <th>Tutar</th>
-                        <th>Para Birimi</th>
-                        <th>İlgiliSiparis</th>
-                        <th>TahsilatTarihi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                     
-                        {
-                    allProducts.map( (data) => ( 
-                    <> 
-                      <tr><td></td>
-                      <td>{data.Musteri}</td>
-                      <td>{data.Tutar}</td>
-                      <td>{data.ParaBirimi}</td>
-                      <td>{data.İlgiliSiparis}</td>
-                      <td>{data.TahsilatTarihi}</td></tr>
-                    </>
-                    )
-                    )
-                    } 
-                    
-                    
-                    </tbody>
-                  </table>
-                </div>
+              <div className="actions">
+                {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
+								<i class="icon-cloud-upload"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
+								<i class="icon-wrench"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
+								<i class="icon-trash"></i> */}
+                <a className="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title title>
+                </a>
               </div>
             </div>
-            {/* END SAMPLE TABLE PORTLET*/}
+            <div className="portlet-body form">
+              <form role="form" className="form-horizontal">
+                <div className="form-body">
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="txtName" >Adı*</label>
+                    <div className="col-md-10">
+                      <input required autoComplete="off" type="text" className="form-control" id="txtName" name="txtName" maxLength={50} onChange={e=>setName(e.target.value)}/>
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="txtSurname">Soyadı*</label>
+                    <div className="col-md-10">
+                      <input required autoComplete="off" type="text" className="form-control" id="txtSurname" name="txtSurname" maxLength={50} onChange={e=>setSurname(e.target.value)} />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="dtBirthDate">Doğum Tarihi</label>
+                    <div className="col-md-10">
+                      <input type="text" className="form-control" id="form_control_1" placeholder="GG/AA/YYYY" onChange={e=>setBirthday(e.target.value)} />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="rdGender">Cinsiyet </label>
+                    <div className="col-md-10">
+                      <div className="md-radio-inline">
+                        <div className="md-radio">
+                          <input type="radio" id="radio53" name="rdGender" className="md-radiobtn" onChange={e=>setGender('k')}/>
+                          <label htmlFor="radio53">
+                            <span />
+                            <span className="check" />
+                            <span className="box" />
+                            Kadın </label>
+                        </div>
+                        <div className="md-radio has-error">
+                          <input type="radio" id="radio54" name="rdGender" className="md-radiobtn" onChange={e=>setGender('e')} />
+                          <label htmlFor="radio54">
+                            <span />
+                            <span className="check" />
+                            <span className="box" />
+                            Erkek </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="cmbCity">Şehir</label>
+                    <div className="col-md-10">
+                      <select className="form-control" id="cmbCity" name="cmbCity" onChange={e=>setCity(e.target.value)} >
+                        <option value>Lütfen seçiniz..</option>
+                        {
+                          cities.map((data) =>(
+                            <option value={data.SehirID}>{data.Sehir}</option>
+                          )
+                          )
+                        }
+                      </select>
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input has-success">
+                    <label className="col-md-2 control-label" htmlFor="txtAdress">Adres</label>
+                    <div className="col-md-10">
+                      <textarea autoComplete="off" className="form-control" rows={3} id="txtAdress" name="txtAdress" maxLength={500} defaultValue={""} onChange={e=>setAddress(e.target.value)} />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-actions">
+                  <div className="row">
+                    <div className="col-md-offset-2 col-md-10">
+                      <a className="btn blue" onClick={()=>myButtonClick()}>Kaydet</a>
+                      <a className="btn default" onClick={()=>myButtonClick()}>Temizle</a>
+                    
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
+          {/* END SAMPLE FORM PORTLET*/}
         </div>
-        {/* END PAGE CONTENT INNER */}
+      </div>
       </div>
     </div>
     {/* END PAGE CONTENT */}
@@ -381,6 +464,6 @@ function Odeme() {
 </>
 
   );
-}
+              }
 
-export default Odeme;
+export default YeniMusteri;

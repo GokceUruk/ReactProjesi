@@ -559,8 +559,9 @@ function Header() {
                     <Link to="/Musteri">Müşteri Listesi</Link>
                     </li>
                     <li className=" ">
-                      <a href="musteri_yeni.html">Yeni Kayıt </a>
+                      <Link to="/YeniMusteri">Yeni Kayıt</Link>
                     </li>
+
                   </ul>
                 </li>
                 <li className=" dropdown-submenu">
@@ -573,7 +574,7 @@ function Header() {
                     <Link to="/Urun">Urun Listesi</Link>
                     </li>
                     <li className=" ">
-                      <a href="urun_yeni.html">Yeni Ürün Kaydı </a>
+                    <Link to="/YeniUrun">Yeni Ürun</Link>
                     </li>
                   </ul>
                 </li>
@@ -599,7 +600,7 @@ function Header() {
                     <Link to="/Siparis">Siparis Listesi</Link>
                     </li>
                     <li className=" ">
-                      <a href="siparis_yeni.html">Yeni Sipariş </a>
+                    <Link to="/YeniSiparis">Yeni Sipariş</Link>
                     </li>
                   </ul>
                 </li>
@@ -613,7 +614,7 @@ function Header() {
                     <Link to="/Tahsilat">Tahsilat Listesi</Link>
                     </li>
                     <li className=" ">
-                      <a href="tahsilat_yeni.html">Yeni Tahsilat </a>
+                    <Link to="/YeniTahsilat">Yeni Tahsilat</Link>
                     </li>
                   </ul>
                 </li>
@@ -627,7 +628,7 @@ function Header() {
                     <Link to="/Odeme">Müşteri Listesi</Link>
                     </li>
                     <li className=" ">
-                      <a href="odeme_yeni.html">Yeni Ödeme </a>
+                      <Link to="/YeniOdeme">Yeni Ödeme</Link>
                     </li>
                   </ul>
                 </li>

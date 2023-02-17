@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
@@ -9,8 +10,17 @@ import Footer from "./Components/Footer";
 
 
 function Tahsilat() {
+  const navigate = useNavigate();
   const[allProducts, setAllProducts] = useState([]);
   useEffect(() => {
+    if(!localStorage.getItem("userName"))
+    {
+      navigate('/login',{replace:true});
+
+    }
+  }, [])
+ 
+  useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
 
     const getAllProductsInfo = async () => {
         let response = await axios.get(

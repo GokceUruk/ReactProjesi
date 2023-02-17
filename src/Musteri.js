@@ -1,15 +1,29 @@
 import './App.css';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
+
 import axios from "axios";
-import { Link } from 'react-router-dom';
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
-function Musteri() {
-  const[allCustomers, setAllCustomers] = useState([]);
-  useEffect(() => {
 
+function Musteri() {
+
+
+  const navigate =useNavigate();
+
+  const[allCustomers, setAllCustomers] = useState([]);
+  
+  useEffect(() => {
+    if(!localStorage.getItem("userName"))
+    {
+      navigate('/login',{replace:true});
+
+    }
+  }, [])
+  
+    useEffect(() => {
     const getAllCustomersInfo = async () => {
         let response = await axios.get(
             'https://private-7d7a277-gokceuruk.apiary-mock.com/musteri'

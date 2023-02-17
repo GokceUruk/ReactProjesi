@@ -1,45 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import {Link, useNavigate} from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { useNavigate } from 'react-router-dom';
 
 
 
 
-function Odeme() {
+function YeniTahsilat() {
+  
   const navigate = useNavigate();
-  const[allProducts, setAllProducts] = useState([]);
-  useEffect(() => {
-    if(!localStorage.getItem("userName"))
-    {
-      navigate('/login',{replace:true});
+ 
 
-    }
+  const[allCustomers, setAllCustomers] = useState([]); // useState ilk değeri yok demektir 
+  
+  useEffect(() => {
+
+    if (!localStorage.getItem("userName"))
+    {
+        navigate('/login', { replace: true });
+    }  
+ 
   }, [])
  
- 
   useEffect(() => { // sayfa açılır açılmaz çalışması gereken yer.
-
-    const getAllProductsInfo = async () => {
+  
+    const getAllCustomersInfo = async () => {
         let response = await axios.get(
-            'https://private-7d7a277-gokceuruk.apiary-mock.com/odeme'
+            'https://private-7d7a277-gokceuruk.apiary-mock.com/musteri'
             );
     
-            console.log("getProductsInfo" + response.data.OdemeListesi);
+            console.log("getAllCustomersInfo" + response.data.MusteriListesi);
 
-            setAllProducts(response.data.OdemeListesi);
+            setAllCustomers(response.data.MusteriListesi);
 
     }
     // call the function
-    getAllProductsInfo().catch(console.error);
+    getAllCustomersInfo().catch(console.error);
  
   }, [])
   return (
   
    <>
+
   <Header />
 
   {/* BEGIN PAGE CONTAINER */}
@@ -50,7 +54,7 @@ function Odeme() {
         {/* BEGIN PAGE TITLE */}
         <div className="page-title">
           <h1>
-            U <small>Liste</small>
+            Müşteri <small>Yeni Kayıt</small>
           </h1>
         </div>
         {/* END PAGE TITLE */}
@@ -306,70 +310,113 @@ function Odeme() {
             <i className="fa fa-circle" />
           </li>
           <li>
-            <a href="musteri_liste.html">Liste</a>
+            < Link to ="/YeniMusteri"> Yeni Kayıt </ Link>
           </li>
         </ul>
         {/* END PAGE BREADCRUMB */}
-        {/* BEGIN PAGE CONTENT INNER */}
+       
         <div className="row">
-          <div className="col-md-12">
-            {/* <div class="note note-success note-bordered">
-						<p>
-							 Please try to re-size your browser window in order to see the tables in responsive mode.
-						</p>
-					</div> */}
-            {/* BEGIN SAMPLE TABLE PORTLET*/}
-            <div className="portlet light">
-              <div className="portlet-title">
-                <div className="caption">
-                  <i className="fa fa-cogs font-green-sharp" />
-                  <span className="caption-subject font-green-sharp bold uppercase">
-                    MÜŞTERİ LİSTESİ
-                  </span>
-                </div>
-                <div className="tools">
-                  <a href="javascript:;" className="collapse"></a>
-                </div>
+        <div className="col-md-12">
+          {/* BEGIN SAMPLE FORM PORTLET*/}
+          <div className="portlet light">
+            <div className="portlet-title">
+              <div className="caption font-green-haze">
+                {/* <i class="icon-settings font-green-haze"></i>
+								<span class="caption-subject bold uppercase"> Horizontal Form</span> */}
               </div>
-              <div className="portlet-body">
-                <div className="table-responsive">
-                  <table className="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Musteri</th>
-                        <th>Tutar</th>
-                        <th>Para Birimi</th>
-                        <th>İlgiliSiparis</th>
-                        <th>TahsilatTarihi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                     
-                        {
-                    allProducts.map( (data) => ( 
-                    <> 
-                      <tr><td></td>
-                      <td>{data.Musteri}</td>
-                      <td>{data.Tutar}</td>
-                      <td>{data.ParaBirimi}</td>
-                      <td>{data.İlgiliSiparis}</td>
-                      <td>{data.TahsilatTarihi}</td></tr>
-                    </>
-                    )
-                    )
-                    } 
-                    
-                    
-                    </tbody>
-                  </table>
-                </div>
+              <div className="actions">
+                {/* <a class="btn btn-circle btn-icon-only blue" href="javascript:;">
+								<i class="icon-cloud-upload"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only green" href="javascript:;">
+								<i class="icon-wrench"></i>
+								</a>
+								<a class="btn btn-circle btn-icon-only red" href="javascript:;">
+								<i class="icon-trash"></i> */}
+                <a className="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title title>
+                </a>
               </div>
             </div>
-            {/* END SAMPLE TABLE PORTLET*/}
+            <div className="portlet-body form">
+              <form role="form" className="form-horizontal">
+                <div className="form-body">
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">Müşteri</label>
+                    <div className="col-md-10">
+                      <select className="form-control" id="form_control_1">
+                        <option value>Lütfen seçiniz..</option>
+                        <option value>Müşteri 1</option>
+                        <option value>Müşteri 2</option>
+                        <option value>Müşteri 3</option>
+                        <option value>Müşteri 4</option>
+                      </select>
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">Tutar</label>
+                    <div className="col-md-10">
+                      <input type="text" className="form-control" id="form_control_1" />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">Para Birimi</label>
+                    <div className="col-md-10">
+                      <select className="form-control" id="form_control_1">
+                        <option value>Lütfen seçiniz..</option>
+                        <option value>TRY</option>
+                        <option value>EUR</option>
+                        <option value>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">İlgili Sipariş</label>
+                    <div className="col-md-10">
+                      <select className="form-control" id="form_control_1">
+                        <option value>Lütfen seçiniz..</option>
+                        <option value>Sipariş 1</option>
+                        <option value>Sipariş 2</option>
+                        <option value>Sipariş 3</option>
+                        <option value>Sipariş 4</option>
+                        <option value>Sipariş 5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">Tahsilat Tarihi</label>
+                    <div className="col-md-10">
+                      <input type="text" className="form-control" id="form_control_1" placeholder="GG/AA/YYYY" />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group form-md-line-input has-success">
+                    <label className="col-md-2 control-label" htmlFor="form_control_1">Açıklama</label>
+                    <div className="col-md-10">
+                      <textarea className="form-control" rows={3} defaultValue={""} />
+                      <div className="form-control-focus">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-actions">
+                  <div className="row">
+                    <div className="col-md-offset-2 col-md-10">
+                      <button type="button" className="btn blue">Kaydet</button>
+                      <button type="button" className="btn default">Vazgeç</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
+          {/* END SAMPLE FORM PORTLET*/}
         </div>
-        {/* END PAGE CONTENT INNER */}
+      </div>
       </div>
     </div>
     {/* END PAGE CONTENT */}
@@ -383,4 +430,4 @@ function Odeme() {
   );
 }
 
-export default Odeme;
+export default YeniTahsilat;

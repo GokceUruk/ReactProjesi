@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Components/Header";
@@ -9,7 +10,17 @@ import Footer from "./Components/Footer";
 
 
 function Urun() {
+  const navigate = useNavigate();
   const[allProducts, setAllProducts] = useState([]);
+  const[allCustomers, setAllCustomers] = useState([]); //
+  useEffect(() => {
+    if(!localStorage.getItem("userName"))
+    {
+      navigate('/login',{replace:true});
+
+    }
+  }, [])
+ 
   useEffect(() => {
 
     const getAllProductsInfo = async () => {
